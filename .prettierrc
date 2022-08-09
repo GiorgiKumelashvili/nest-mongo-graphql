@@ -1,0 +1,9 @@
+{
+  "singleQuote": true,
+  "trailingComma": "all",
+  "useTabs": false,
+  "requireConfig": false,
+  "tabWidth": 2,
+  "arrowParens": "avoid",
+  "useEditorConfig": true
+}
