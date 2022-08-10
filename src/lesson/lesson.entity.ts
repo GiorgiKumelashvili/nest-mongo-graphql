@@ -14,3 +14,5 @@ export class LessonEntity {
   @Column()
   endDate: string;
 }
+
+// export const LessonsAndCount = {} as [LessonEntity[], number];
