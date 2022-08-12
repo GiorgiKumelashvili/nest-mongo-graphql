@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MongoRepository, Repository } from 'typeorm';
 import { CreateStudentInput } from './create-student.input';
 import { v4 as uuid } from 'uuid';
 import { StudentEntity } from './student.entity';
@@ -20,5 +20,28 @@ export class StudentService {
     });
 
     return this.studentRepository.save(student);
+  }
+
+  public getStudents(): Promise<StudentEntity[]> {
+    return this.studentRepository.find();
+  }
+
+  public async getManyStudents(studentIds: string[]) {
+    return this.studentRepository.find({
+      where: {
+        id: {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          $in: studentIds,
+        },
+      },
+    });
+    // return this.studentRepository.find({
+    //   where: {
+    //     id: {
+    //       $in: studentIds,
+    //     },
+    //   },
+    // });
   }
 }

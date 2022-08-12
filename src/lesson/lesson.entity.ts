@@ -1,8 +1,11 @@
-import { Column, Entity, ObjectIdColumn } from 'typeorm';
+import { Column, Entity, ObjectIdColumn, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class LessonEntity {
   @ObjectIdColumn()
+  _id: string;
+
+  @PrimaryColumn()
   id: string;
 
   @Column()
@@ -13,6 +16,9 @@ export class LessonEntity {
 
   @Column()
   endDate: string;
+
+  @Column()
+  students: string[];
 }
 
 // export const LessonsAndCount = {} as [LessonEntity[], number];

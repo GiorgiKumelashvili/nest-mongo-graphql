@@ -12,22 +12,36 @@ export class LessonService {
     private readonly lessonRepository: Repository<LessonEntity>,
   ) {}
 
-  public async createLesson({ name, startDate, endDate }: CreateLessonInput) {
+  public async createLesson({
+    name,
+    startDate,
+    endDate,
+    students,
+  }: CreateLessonInput) {
     const lesson = this.lessonRepository.create({
       id: uuid(),
       name,
       startDate,
       endDate,
+      students,
     });
 
     return this.lessonRepository.save(lesson);
   }
 
-  public async getLesson(id: string) {
+  public async getLesson(id: string): Promise<LessonEntity> {
     return this.lessonRepository.findOneBy({ id });
   }
 
-  public async getLessons() {
+  public async getLessons(): Promise<LessonEntity[]> {
     return this.lessonRepository.find();
+  }
+
+  public async assignStudentsToLesson(lessonId: string, studentIds: string[]) {
+    const lesson = await this.lessonRepository.findOneBy({ id: lessonId });
+
+    lesson.students = [...lesson.students, ...studentIds];
+
+    return this.lessonRepository.save(lesson);
   }
 }
