@@ -16,6 +16,7 @@ import { StudentModule } from './student/student.module';
     TypeOrmModule.forRoot({
       type: 'mongodb',
       url: 'mongodb://localhost/school',
+      port: 27017,
       synchronize: true,
       useUnifiedTopology: true,
       entities: [LessonEntity, StudentEntity],

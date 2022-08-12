@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MongoRepository } from 'typeorm';
 import { LessonEntity } from './lesson.entity';
 import { v4 as uuid } from 'uuid';
 import { CreateLessonInput } from './lesson.input';
@@ -9,7 +9,7 @@ import { CreateLessonInput } from './lesson.input';
 export class LessonService {
   constructor(
     @InjectRepository(LessonEntity)
-    private readonly lessonRepository: Repository<LessonEntity>,
+    private readonly lessonRepository: MongoRepository<LessonEntity>,
   ) {}
 
   public async createLesson({
@@ -30,7 +30,7 @@ export class LessonService {
   }
 
   public async getLesson(id: string): Promise<LessonEntity> {
-    return this.lessonRepository.findOneBy({ id });
+    return this.lessonRepository.findOne({ id });
   }
 
   public async getLessons(): Promise<LessonEntity[]> {
@@ -38,7 +38,7 @@ export class LessonService {
   }
 
   public async assignStudentsToLesson(lessonId: string, studentIds: string[]) {
-    const lesson = await this.lessonRepository.findOneBy({ id: lessonId });
+    const lesson = await this.lessonRepository.findOne({ id: lessonId });
 
     lesson.students = [...lesson.students, ...studentIds];
 
